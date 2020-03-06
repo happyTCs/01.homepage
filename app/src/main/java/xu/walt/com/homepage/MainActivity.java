@@ -2,6 +2,7 @@ package xu.walt.com.homepage;
 
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,17 +11,28 @@ import android.view.MenuItem;
 
 
 import android.view.View;
+
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import xu.walt.com.homepage.moreFragment.CasualClientFragment;
+import xu.walt.com.homepage.moreFragment.DirectionalRecommentFragment;
+import xu.walt.com.homepage.moreFragment.KeyClientFragment;
+import xu.walt.com.homepage.moreFragment.MoreFragmentAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private Toolbar toolbar;
-    private TabLayout tableLayout;
+   private TabLayout tableLayout;
     private TextView titleTv;
-
+//   所有fragment
+    private ArrayList<Fragment> mFragmentList;
+    private String[] titles={"散户","大客户","定向推荐"};;
+    private int images[] = {R.drawable.sanhu,R.drawable.dakehu,R.drawable.directional_recommended};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +42,32 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.vp_content);
         titleTv = findViewById(R.id.tv_title);
         initToolbar();
-        initViewPager();
+//        initViewPager();
+        initMoreViewPager();
+    }
+
+    private void initMoreViewPager() {
+        try {
+            CasualClientFragment casualClientFragment = new CasualClientFragment();
+            KeyClientFragment keyClientFragment = new KeyClientFragment();
+            DirectionalRecommentFragment directionalRecommentFragment = new DirectionalRecommentFragment();
+            mFragmentList= new ArrayList<>();
+            mFragmentList.add(casualClientFragment);
+            mFragmentList.add(keyClientFragment);
+            mFragmentList.add(directionalRecommentFragment);
+            MoreFragmentAdapter moreFragmentAdapter = new MoreFragmentAdapter(getSupportFragmentManager(), this, mFragmentList, titles, tableLayout,images);
+            viewPager.setAdapter(moreFragmentAdapter);
+            tableLayout.setupWithViewPager(viewPager);
+            for (int i = 0; i < tableLayout.getTabCount(); i++) {
+                TabLayout.Tab tab = tableLayout.getTabAt(i);
+                tab.setCustomView(moreFragmentAdapter.getTabView(i));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void initViewPager() {
@@ -42,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
 
-        toolbar.setTitle("退回妥投");
-        titleTv.setText("标题");
+        toolbar.setTitle("派揽");
+        titleTv.setText("模块");
         toolbar.setTitleTextAppearance(this, R.style.Toolbar_TitleText);
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         toolbar.setTitleTextColor(Color.WHITE);

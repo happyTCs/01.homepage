@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">HomePage</string>
+    <string name="casual_client">散户</string>
+    <string name="key_client">大客户</string>
+    <string name="directional_recommend">大客户</string>
 </resources>
