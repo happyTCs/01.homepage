@@ -1,5 +1,6 @@
 package xu.walt.com.homepage;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -7,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 
 import android.view.View;
@@ -17,10 +17,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import xu.walt.com.homepage.moreFragment.CasualClientFragment;
-import xu.walt.com.homepage.moreFragment.DirectionalRecommentFragment;
-import xu.walt.com.homepage.moreFragment.KeyClientFragment;
-import xu.walt.com.homepage.moreFragment.MoreFragmentAdapter;
+import xu.walt.com.homepage.DispatchPKP.activity.DispatchpkpActivity;
+import xu.walt.com.homepage.DispatchPKP.moreFragment.CasualClientFragment;
+import xu.walt.com.homepage.DispatchPKP.moreFragment.DirectionalRecommentFragment;
+import xu.walt.com.homepage.DispatchPKP.moreFragment.KeyClientFragment;
+import xu.walt.com.homepage.DispatchPKP.moreFragment.MoreFragmentAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initMoreViewPager() {
-        try {
+
             CasualClientFragment casualClientFragment = new CasualClientFragment();
             KeyClientFragment keyClientFragment = new KeyClientFragment();
             DirectionalRecommentFragment directionalRecommentFragment = new DirectionalRecommentFragment();
@@ -63,9 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 tab.setCustomView(moreFragmentAdapter.getTabView(i));
 
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
 
 
     }
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initToolbar() {
 
-        toolbar.setTitle("派揽");
+        toolbar.setTitle("主界面");
         titleTv.setText("模块");
         toolbar.setTitleTextAppearance(this, R.style.Toolbar_TitleText);
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -90,7 +89,11 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "转", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "转", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(MainActivity.this,DispatchpkpActivity.class);
+                startActivity(intent);
+
             }
         });
     }
