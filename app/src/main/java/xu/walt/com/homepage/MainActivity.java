@@ -1,5 +1,7 @@
 package xu.walt.com.homepage;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,17 +37,49 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Fragment> mFragmentList;
     private String[] titles={"散户","大客户","定向推荐"};;
     private int images[] = {R.drawable.sanhu,R.drawable.dakehu,R.drawable.directional_recommended};
+    private Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.tool_bar);
         tableLayout = findViewById(R.id.tl_tabs);
-        viewPager = findViewById(R.id.vp_content);
+//        viewPager = findViewById(R.id.vp_content);
         titleTv = findViewById(R.id.tv_title);
+        button = findViewById(R.id.btn_dialog);
         initToolbar();
 //        initViewPager();
-        initMoreViewPager();
+//        initMoreViewPager();
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                showNormalDialog();
+                Intent intent = new Intent(MainActivity.this, DispatchpkpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void showNormalDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("完成退件");
+        builder.setMessage("已开箱，完成退件");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(),"tuichu",Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
+
     }
 
     private void initMoreViewPager() {
