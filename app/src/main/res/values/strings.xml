@@ -3,4 +3,7 @@
     <string name="casual_client">散户</string>
     <string name="key_client">大客户</string>
     <string name="directional_recommend">定向推荐</string>
+    <string name="start">开启</string>
+    <string name="stop">关闭</string>
+    <string name="padding8">8dp</string>
 </resources>

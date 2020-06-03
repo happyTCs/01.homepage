@@ -3,14 +3,12 @@ package xu.walt.com.homepage.DispatchPKP.moreFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
+import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -26,10 +24,11 @@ public class KeyClientFragment extends NativeFragment {
     private static final String TAG = "xdb";
 
     private boolean isViewCreated;
-    private boolean isFirstVisible = true;
+  ;
+    private boolean willOnstart1 =false;
+
     private boolean isFragmentVisible;
     private DispatchVM vm;
-
 
     @Nullable
     @Override
@@ -59,23 +58,33 @@ public class KeyClientFragment extends NativeFragment {
         super.setUserVisibleHint(isVisibleToUser);
         isFragmentVisible = isVisibleToUser;
 
-        //当 View 创建完成切 用户可见的时候请求 且仅当是第一次对用户可见的时候请求自动数据
-        if (isVisibleToUser && isViewCreated && isFirstVisible) {
-            Log.e(TAG, "只有自动请求一次数据  大客户");
-//            requestData();
-            isFirstVisible = false;
+   /*     //当 View 创建完成切 用户可见的时候请求 且仅当是第一次对用户可见的时候请求自动数据
+        if (isVisibleToUser && isViewCreated && isFirstVisible1isFirstVisible1) {
+            Log.e(TAG, "isFirstVisible，只有自动请求一次数据  大客户");
 
-        }
+//            requestData();
+            isFirstVisible1isFirstVisible1 = false;
+
+        }*/
 
         // 由于每次可见都需要刷新所以我们只需要判断  Fragment 展示在用户面面前了，view 初始化完成了 然后即可以请求数据了
         if (isVisibleToUser && isViewCreated) {
-             Log.e(TAG, "每次都可见数据  大客户");
+             Log.e(TAG, "isVisibleToUser  大客户");
+            Toast.makeText(getActivity().getApplicationContext(),"大客户",Toast.LENGTH_LONG).show();
             vm = new DispatchVM();
             vm.getKeyClientNet();
 //            requestDataAutoRefresh();
         }
     }
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (willOnstart1&&isFragmentVisible) {
+            Log.e(TAG, "onStart可见数据  大客户");
+        } else {
+            willOnstart1 =true;
+        }
+    }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getSubscribe(MessageEvent event) {
         if (event.isKey()) {

@@ -3,15 +3,12 @@ package xu.walt.com.homepage.DispatchPKP.moreFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -27,7 +24,9 @@ public class DirectionalRecommentFragment extends NativeFragment {
     private static final String TAG = "xdb";
 
     private boolean isViewCreated;
-    private boolean isFirstVisible = true;
+    private boolean isFirstVisible2 = true;
+
+    private boolean willOnstart2 =false;
     private boolean isFragmentVisible;
     private DispatchVM vm;
 
@@ -60,13 +59,28 @@ public class DirectionalRecommentFragment extends NativeFragment {
             vm.getDirectionalRecommentNet();
 //            requestDataAutoRefresh();
         }*/
-        if (isVisibleToUser) {
-            Log.e(TAG, "每次都可见数据  定向推荐");
+    /*    if (isFirstVisible2&isVisibleToUser) {
+            Log.e(TAG, "isFirstVisible，推荐派揽第一次创建");
+            isFirstVisible2 = false;
+        }*/
+
+        if (isVisibleToUser&&isViewCreated) {
+            Log.e(TAG, "isVisibleToUser  定向推荐");
+            Toast.makeText(getActivity().getApplicationContext(),"定向推荐",Toast.LENGTH_SHORT).show();
             vm = new DispatchVM();
             vm.getDirectionalRecommentNet();
         }
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (willOnstart2&&isFragmentVisible) {
+            Log.e(TAG, "onStart可见数据  推荐派揽");
+        } else {
+            willOnstart2 =true;
+        }
 
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getDirectionalSubscribe(MessageEvent event) {
